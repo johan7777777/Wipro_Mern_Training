@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>assignment</title>
+
+    <style>
+        // Basic page styling
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+
+        // Main heading style
+        h1 {
+            text-align: center;
+        }
+
+        // Section spacing
+        .section {
+            margin-top: 30px;
+        }
+
+        // Card-like style for posts and todos
+        .item {
+            background: #ffffff;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+        }
+
+        // Error message styling
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Main Heading -->
+<h1>Daily Assignment on Fetch API</h1>
+
+<!-- Posts Section -->
+<div class="section">
+    <h2>Blog Posts</h2>
+    <div id="posts"></div>
+</div>
+
+<!-- Todos Section -->
+<div class="section">
+    <h2>Todo List</h2>
+    <div id="todos"></div>
+</div>
+
+<!-- Error Message -->
+<p id="error" class="error"></p>
+
+<script>
+    // Revealing Module Pattern is used to organize code
+    const FetchApp = (function () {
+
+        // API endpoint for blog posts
+        const POSTS_URL = "https://jsonplaceholder.typicode.com/posts";
+
+        // API endpoint for todos
+        const TODOS_URL = "https://jsonplaceholder.typicode.com/todos";
+
+        // Common function to fetch data from a given URL
+        async function fetchData(url) {
+            const response = await fetch(url);
+
+            // Check if response is successful
+            if (!response.ok) {
+                throw new Error("Failed to fetch data");
+            }
+
+            // Convert response to JSON
+            return response.json();
+        }
+
+        // Function to display blog posts on the page
+        function displayPosts(posts) {
+            const postsDiv = document.getElementById("posts");
+            postsDiv.innerHTML = "";
+
+            // Loop through each post and add it to the DOM
+            posts.forEach(post => {
+                const div = document.createElement("div");
+                div.className = "item";
+
+                div.innerHTML = `
+                    <strong>${post.title}</strong>
+                    <p>${post.body}</p>
+                `;
+
+                postsDiv.appendChild(div);
+            });
+        }
+
+        // Function to display todo items with checkboxes
+        function displayTodos(todos) {
+            const todosDiv = document.getElementById("todos");
+            todosDiv.innerHTML = "";
+
+            // Loop through each todo item
+            todos.forEach(todo => {
+                const div = document.createElement("div");
+                div.className = "item";
+
+                // Create checkbox for todo completion status
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.checked = todo.completed;
+
+                // Create label text for todo title
+                const label = document.createElement("span");
+                label.textContent = " " + todo.title;
+
+                // Add checkbox and label to the div
+                div.appendChild(checkbox);
+                div.appendChild(label);
+
+                // Add todo item to the DOM
+                todosDiv.appendChild(div);
+            });
+        }
+
+        // Main function that initializes the application
+        async function init() {
+            try {
+                // Fetch and display blog posts
+                const postsData = await fetchData(POSTS_URL);
+                displayPosts(postsData);
+
+                // Fetch and display todos
+                const todosData = await fetchData(TODOS_URL);
+                displayTodos(todosData);
+
+            } catch (error) {
+                // Display error message if fetch fails
+                document.getElementById("error").textContent =
+                    "Error: Unable to fetch data from server.";
+            }
+        }
+
+        // Expose only init function
+        return {
+            init
+        };
+
+    })();
+
+    // Start the application
+    FetchApp.init();
+</script>
+
+</body>
+</html>

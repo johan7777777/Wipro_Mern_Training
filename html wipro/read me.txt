@@ -1,0 +1,28 @@
+HTML (HyperText Markup Language) is the standard language used to create webpages. 
+It defines the structure, layout, and elements that make up a website — 
+such as text, images, links, videos, and forms.
+Let’s break the term down:
+	• HyperText: Refers to text that contains links (called hyperlinks) to other web pages. These links connect different pages and make website navigation possible.
+Example: <a href="about.html">About Us</a> connects one page to another.
+	• Markup Language: Means using tags to “mark up” content so that browsers 
+    know how to display it.
+Example: <h1> for headings, <p> for paragraphs, <img> for images.
+Together, HTML tells the browser what to display, while CSS tells it how to display it 
+(style, color, layout), and JavaScript adds interactivity.
+Analogy:
+If a website were a human body —
+	• HTML is the skeleton (structure)
+	• CSS is the skin and clothing (style)
+	• JavaScript is the brain and muscles (behavior)
+Note: HTML is the backbone of every website — it defines what appears on the page and how the content is arranged.
+
+Why Do We Need HTML and What Is Its Importance?
+We need HTML because it is the foundation of web development. Without it, browsers would not understand how to structure or display content.
+Importance of HTML
+Concept	Description
+Basic Building Block	HTML is the starting point for all websites. Every web page you see — from Google to YouTube — is built with HTML.
+Defines Structure	It organizes content using tags like <header>, <section>, <article>, <footer>, etc.
+Supports Multimedia	HTML supports embedding images, videos, audio, and interactive elements (like <video>, <audio>, <canvas>).
+Works with CSS & JavaScript	HTML handles structure, CSS handles design, and JavaScript handles interactivity — the three pillars of front-end development.
+Universally Supported	Every modern browser (Chrome, Firefox, Safari, Edge) understands HTML, making it the universal web language.
+SEO & Accessibility	Proper HTML structure improves SEO (search ranking) and accessibility for screen readers and users with disabilities.

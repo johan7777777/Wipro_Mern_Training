@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>My Portfolio</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f4f7;
+        }
+
+        /* HEADER */
+        .header {
+            background-color: #0a3d62;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .header a {
+            color: white;
+            margin: 0 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .header img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+
+        /* NAVBAR */
+        nav {
+            background-color: #1e3799;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* SECTION */
+        section {
+            background-color: white;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h2 {
+            color: #0a3d62;
+        }
+
+        /* CARDS */
+        .card-box {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .custom-card {
+            width: 230px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .custom-card button {
+            margin-top: 10px;
+        }
+
+        /* CONTACT CARDS */
+        .contact-card {
+            background-color: #eaf0f6;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            width: 250px;
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: #0a3d62;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div>
+        <h1>johan</h1>
+        <p>software Developer</p>
+    </div>
+
+    <div>
+        <a href="#">LinkedIn</a>
+        <a href="#">GitHub</a>
+    </div>
+
+    <img src="IMG_2085.JPG" alt="Profile Image">
+</header>
+
+<!-- NAVBAR -->
+<nav>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#features">Features</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<!-- ABOUT -->
+<section id="about">
+    <h2>About Me</h2>
+    <p>
+        I am a student learning HTML and CSS.  
+        I enjoy creating clean and simple web designs.
+    </p>
+    <button class="btn btn-primary">Download Resume</button>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+    <h2>My Skills</h2>
+
+    <div class="card-box">
+
+        <div class="custom-card">
+            <h5>HTML</h5>
+            <p>Basic structure & elements</p>
+            <button class="btn btn-outline-primary btn-sm">View</button>
+        </div>
+
+        <div class="custom-card">
+            <h5>CSS</h5>
+            <p>Layouts & styling</p>
+            <button class="btn btn-outline-success btn-sm">View</button>
+        </div>
+
+        <div class="custom-card">
+            <h5>Bootstrap</h5>
+            <p>Responsive design</p>
+            <button class="btn btn-outline-dark btn-sm">View</button>
+        </div>
+
+    </div>
+</section>
+
+<!-- EXTRA FEATURES -->
+<section id="features">
+    <h2>Extra Features</h2>
+
+    <div class="card-box">
+
+        <div class="custom-card">
+            <h6>Responsive Design</h6>
+            <p>Mobile friendly layouts</p>
+        </div>
+
+        <div class="custom-card">
+            <h6>Clean UI</h6>
+            <p>Simple & readable design</p>
+        </div>
+
+        <div class="custom-card">
+            <h6>Beginner Friendly</h6>
+            <p>Easy to understand code</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <h2>Contact Me</h2>
+
+    <div class="card-box">
+
+        <div class="contact-card">
+            <h6>Email</h6>
+            <a href="mailto:johan@gmail.com">johan@gmail.com</a>
+        </div>
+
+        <div class="contact-card">
+            <h6>Phone</h6>
+            <a href="tel:6369493533">6369493533</a>
+        </div>
+
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2026  Portfolio</p>
+</footer>
+
+</body>
+</html>
