@@ -1,0 +1,70 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "Men's Denim Jacket",
+      "price": 1999,
+      "category": "Men",
+      "image": "https://cpimg.tistatic.com/2622929/b/1/formal-mensware.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Men's Hoodie",
+      "price": 1499,
+      "category": "Men",
+      "image": "https://imagescdn.tasva.com/img/app/product/1/1076700-16659608.jpg?auto=format&w=600"
+    },
+    {
+      "id": 3,
+      "title": "Men's Casual Shirt",
+      "price": 999,
+      "category": "Men",
+      "image": "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=900&q=80"
+    },
+
+    {
+      "id": 4,
+      "title": "Women's Summer Dress",
+      "price": 1799,
+      "category": "Women",
+      "image": "https://fashionous.in/cdn/shop/files/BrownDress3.jpg?v=1708329224&width=1946"
+    },
+    {
+      "id": 5,
+      "title": "Women's Blazer",
+      "price": 2299,
+      "category": "Women",
+      "image": "https://tusokonline.com/cdn/shop/files/Slide11_410edf48-f34d-4aa0-a13a-a8389439401f_1445x.jpg?v=1723456167"
+    },
+    {
+      "id": 6,
+      "title": "Women's Knit Sweater",
+      "price": 1399,
+      "category": "Women",
+      "image": "https://images.meesho.com/images/products/386329438/1bjhj_512.webp?width=512"
+    },
+
+    {
+      "id": 7,
+      "title": "Kids' Cute Hoodie",
+      "price": 899,
+      "category": "Kids",
+      "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80"
+    },
+    {
+      "id": 8,
+      "title": "Kids' T-Shirt Set",
+      "price": 699,
+      "category": "Kids",
+      "image": "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=900&q=80"
+    },
+    {
+      "id": 9,
+      "title": "Kids' Winter Jacket",
+      "price": 1299,
+      "category": "Kids",
+      "image": "https://5.imimg.com/data5/SELLER/Default/2023/11/362100978/CW/VW/MR/78700092/kids-suit-500x500.jpeg"
+    }
+    
+  ]
+}
