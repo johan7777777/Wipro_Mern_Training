@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronic Products</title>
+</head>
+<body>
+<script>
+
+    // applying discount
+
+    const prices = [50000, 30000, 20000];
+
+    document.writeln("Original Price : " + prices[0] + "<br>");
+
+    const discountedPrices = [];
+
+    // Adding discount (10% off)
+    for(let i = 0; i < prices.length; i++)
+    {
+        discountedPrices.push(prices[i] - (prices[i] * 10 / 100));
+    }
+
+    document.writeln("Discounted Prices using traditional method : " + discountedPrices + "<br>");
+
+    const expensiveProducts = [];
+
+    // Filtering products above 25000
+    for(let i = 0; i < prices.length; i++)
+    {
+        if(prices[i] > 25000)
+        expensiveProducts.push(prices[i]);
+    }
+
+    document.writeln("Expensive Products using traditional method : " + expensiveProducts + "<br>");
+
+    let totalPrice = 0;
+
+    // Accumulating total price
+    for(let i = 0; i < prices.length; i++)
+    {
+        totalPrice += prices[i];
+    }
+
+    document.writeln("Total Product Price using traditional method : " + totalPrice + "<br><br>");
+
+ 
+
+    const productPrices = [50000, 30000, 20000];
+
+    // Apply discount using map
+    const newPrices = productPrices.map(price => price - (price * 10 / 100));
+    document.writeln("Discounted Prices using pure function method : " + newPrices + "<br>");
+
+    // Filter expensive products
+    const filteredProducts = productPrices.filter(price => price > 25000);
+    document.writeln("Filtered Products using pure function method : " + filteredProducts + "<br>");
+
+    // Accumulate total price using reduce (ACCUMULATOR)
+    const totalAmount = productPrices.reduce((sum, price) => sum + price, 0);
+    document.writeln("Total Accumulated Price using pure function method : " + totalAmount);
+
+</script>
+</body>
+</html>

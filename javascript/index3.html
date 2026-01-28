@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="welcome">Hello UserName !</h1>
+
+    <button id ="changeText" > Change the HTML Content</button>
+    <script>
+
+            const button = document.getElementById("changeText");
+
+            button.addEventListener("click" ,function()
+            {
+                    document.getElementById("welcome").innerHTML = " we have changed the Text";
+            } );
+    </script>
+
+    <!-- DOM -- Document Object Model --  which is used to change the html data dynamically
+       getElementById() == used to access the html elements by ID 
+       innerHTML  ==  to update the page dynamically without refreshing 
+       addEventListener == will wait for a click event 
+    -->
+
+    <script>
+
+let day = prompt("Enter the value as  a day name : ")
+switch(day)
+{
+case "Monday" : console.log("Today is :" ,day) ; break;
+case "Tuesday" : console.log("Today is :" ,day) ; break;
+case "Wednesday" : console.log("Today is :" ,day) ; break;
+
+}
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <script>
+
+        // traditional way for incrementing the salary 
+
+        const salaries = [45000,67000 ,36000];
+
+        document.writeln(salaries[0]);
+
+        const newsalaries =[];
+
+        for(let i=0; i<salaries.length ;i++)
+        {
+
+            newsalaries.push(salaries[i] + 1000)
+        }
+
+        document.writeln("New Salary using traditional method :" + newsalaries);
+
+        const highlypaidemployees = [];
+        for(let i=0 ; i<salaries.length ; i++)
+        {
+
+
+            if(salaries[i] > 20000)
+            highlypaidemployees.push(salaries[i]);
+        }
+
+        document.writeln("Highly paid employees using traditional method :" + highlypaidemployees);
+
+        let totalSalary = 0;
+         for(let i=0 ; i<salaries.length ; i++)
+         {
+            totalSalary += salaries[i];
+         }
+
+         document.writeln("Total salary of employees using traditional method :" + totalSalary);
+
+         // using pure functions for incrementing the salary 
+
+                 const empsalaries = [45000,67000 ,36000];
+
+                const empnewsalaries =  empsalaries.map(sal => sal+1000);
+                document.writeln("New Salary using pure function method :" + newsalaries);
+                const filteredsalaries =  empsalaries.filter(sal => sal>50000);
+                document.writeln("filtered Salary using pure function method :" + filteredsalaries);
+                 const totalsalaries =  empsalaries.reduce((sum,sal) => sum + sal , 0);   
+                   document.writeln("Total accumulated salary using pure function method :" + totalsalaries);
+  </script>  
+</body>
+</html>
