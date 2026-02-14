@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>User Messages</h2>
+  <button onclick="loadMessages()">Load Messages</button>
+  <ul id="list"></ul>
+
+  <script>
+    function loadMessages() {
+      fetch("/messages", {
+        headers: { role: "user" }
+      })
+        .then(res => res.json())
+        .then(data => {
+          const list = document.getElementById("list");
+          list.innerHTML = "";
+          data.forEach(m => {
+            const li = document.createElement("li");
+            li.textContent = m.text;
+            list.appendChild(li);
+          });
+        });
+    }
+  </script>
+</body>
+</html>

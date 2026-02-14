@@ -1,0 +1,5 @@
+Hello john 👋
+This is a big file example.
+Node.js file system demo.
+Learning sync vs async reading.
+End of file 🚀

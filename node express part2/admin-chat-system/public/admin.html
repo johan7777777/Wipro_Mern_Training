@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Admin Panel</h2>
+
+  <input type="text" id="msg" placeholder="Enter message" />
+  <br /><br />
+  <input type="file" id="file" />
+  <br /><br />
+  <button onclick="sendMessage()">Send</button>
+
+  <p id="status"></p>
+
+  <script>
+    function sendMessage() {
+      const formData = new FormData();
+      formData.append("message", document.getElementById("msg").value);
+      const file = document.getElementById("file").files[0];
+      if (file) formData.append("file", file);
+
+      fetch("/send", {
+        method: "POST",
+        headers: {
+          role: "admin"   
+        },
+        body: formData
+      })
+        .then(res => res.text())
+        .then(data => {
+          document.getElementById("status").innerText = data;
+        });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "ecommerce-activity2",
+  "version": "1.0.0",
+  "description": "ecomb - E-commerce Order Management System",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.4",
+    "express": "^4.22.1",
+    "mysql2": "^3.17.0"
+  }
+}
