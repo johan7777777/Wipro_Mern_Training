@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <!-- <button onClick="Healthcheck">Click for Health Check</button>
+ <p id="result"></p>
+   <script>
+    function Healthcheck()
+    {
+        fetch("http://localhost:3000/health")
+        .then(response=>response.text())
+        .then(data=>{
+            document.getElementById("result").innerText = data;
+        })
+        .catch(err=>{document.getElementById("result").innerText="Error in connecting with server";});
+    }
+   </script> -->
+   <h2>Node Server Health Check</h2>
+    <form action="http://localhost:3000/time" method="get">
+        <button type="submit">Click Here</button>
+    </form>
+</body>
+</html>
