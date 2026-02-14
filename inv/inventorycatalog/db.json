@@ -1,0 +1,8 @@
+{
+  "products": [
+    { "id": 1, "name": "Rice", "price": 80, "category": "Grocery" },
+    { "id": 2, "name": "Soap", "price": 25, "category": "Personal Care" },
+    { "id": 3, "name": "Shampoo", "price": 120, "category": "Personal Care" },
+    { "id": 4, "name": "Oil", "price": 150, "category": "Grocery" }
+  ]
+}
