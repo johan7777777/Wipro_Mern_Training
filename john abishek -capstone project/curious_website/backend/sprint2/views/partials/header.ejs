@@ -1,0 +1,10 @@
+<p>
+  <a href="/dashboard">Dashboard</a>
+  <% if (typeof user !== 'undefined' && user) { %>
+    <%= user.email %>
+    <a href="/logout">Logout</a>
+  <% } else { %>
+    <a href="/login">Login</a>
+    <a href="/register">Register</a>
+  <% } %>
+</p>

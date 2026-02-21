@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome - Curious</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1, h2 { margin-top: 0; }
+    a { color: #0066cc; margin-right: 10px; }
+    .section { border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; }
+    .nav { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #ddd; }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <a href="/">Home</a>
+    <% if (typeof user !== 'undefined' && user) { %>
+      <%= user.email %>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/logout">Logout</a>
+    <% } else { %>
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    <% } %>
+  </div>
+
+  <h1>Welcome to Curious</h1>
+  
+  <div class="section">
+    <h2>Ask Questions Freely</h2>
+    <p>You can freely ask any question you want! Simply register or login to create a new question. All questions are welcome - whether you're looking for help, sharing knowledge, or starting a discussion.</p>
+  </div>
+
+</body>
+</html>

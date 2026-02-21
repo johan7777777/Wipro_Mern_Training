@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= isEdit ? 'Edit Question' : 'New Question' %></title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { margin-top: 0; }
+    a { color: #0066cc; margin-right: 8px; }
+    input, select, textarea { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; box-sizing: border-box; }
+    button { padding: 8px 16px; background: #333; color: #fff; border: none; cursor: pointer; }
+    label { display: block; margin-bottom: 5px; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <%- include('../partials/header') %>
+  <h1><%= isEdit ? 'Edit Question' : 'New Question' %></h1>
+  <% if (typeof error !== 'undefined' && error) { %><p class="error"><%= error %></p><% } %>
+  <form method="POST" action="<%= formAction %>">
+    <% if (typeof returnUrl !== 'undefined' && returnUrl) { %>
+      <input type="hidden" name="returnUrl" value="<%= returnUrl %>" />
+    <% } %>
+    <label>Description</label>
+    <textarea name="description" rows="4" required><%= question ? question.description : '' %></textarea>
+    <label>Type</label>
+    <select name="questionType">
+      <option value="Post" <%= question && question.questionType === 'Post' ? 'selected' : '' %>>Post</option>
+      <option value="Discussion" <%= question && question.questionType === 'Discussion' ? 'selected' : '' %>>Discussion</option>
+    </select>
+    <button type="submit"><%= isEdit ? 'Update' : 'Create' %></button>
+    <a href="<%= typeof returnUrl !== 'undefined' && returnUrl ? returnUrl : '/dashboard' %>">Cancel</a>
+  </form>
+</body>
+</html>

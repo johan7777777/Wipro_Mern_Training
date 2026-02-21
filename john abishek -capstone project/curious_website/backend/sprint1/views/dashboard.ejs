@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <style>
+    body{font-family:Arial;margin:20px}
+    h1,h2{margin-top:0}
+    a{color:#06c;margin-right:10px}
+    p{margin:10px 0}
+    .top-right{position:fixed;top:20px;right:20px;display:flex;align-items:center;gap:10px}
+    .role-box{border:1px solid #333;padding:10px;margin-bottom:10px}
+    .role-box.admin{background:#ffeb3b}
+    .role-box.user{background:#e3f2fd}
+    .section{border:1px solid #ddd;padding:15px;margin-bottom:20px}
+    .row{display:flex;align-items:center;gap:10px;border-bottom:1px solid #ddd;padding:10px 0}
+    .question-row{border-bottom:1px solid #ddd;padding:15px 0}
+    .row span:first-child{flex:1}
+    .flex-row{display:flex;gap:10px;align-items:flex-start}
+    .search-form{margin-bottom:15px}
+    .search-form input{flex:1;padding:8px;border:1px solid #ccc;box-sizing:border-box}
+    .btn{padding:8px 16px;background:#333;color:#fff;border:none;cursor:pointer}
+    .btn-clear{padding:8px 16px;background:#999;color:#fff;text-decoration:none;display:inline-block;cursor:pointer}
+    .btn-ok{background:#4caf50}
+    .btn-warn{background:#f59e0b}
+    .btn-sm{padding:2px 8px;font-size:12px}
+    .success{color:green;background:#e8f5e9;padding:10px;border:1px solid #4caf50;border-radius:4px;margin-bottom:15px}
+    .error{color:red}
+    .answer-block{margin-bottom:15px;padding-left:20px;border-left:3px solid #ddd}
+    .answer-card{margin:10px 0;padding:10px;background:#f9f9f9;border-radius:4px}
+    .comment-block{margin-top:10px;padding-left:15px;border-left:2px solid #ddd}
+    .comment-card{margin:5px 0;padding:5px;background:#fff;border-radius:3px}
+    .mb{margin-bottom:10px}
+    .meta{font-size:12px;color:#666}
+    .meta-sm{font-size:11px;color:#999}
+    .flex-1{flex:1}
+    .inline-form{display:inline}
+    .comment-form{gap:5px}
+    .comment-form input,.answer-form textarea{flex:1;padding:8px;border:1px solid #ccc}
+    .comment-form input{padding:5px;font-size:12px}
+  </style>
+</head>
+<body>
+  <div class="top-right">
+    <div class="role-box <%= user.role === 'admin' ? 'admin' : 'user' %>">
+      <strong>Role: <%= user.role === 'admin' ? 'Admin' : 'User' %></strong>
+    </div>
+    <a href="/logout">Logout</a>
+  </div>
+  <h1>Welcome <%= user.email %></h1>
+
+  <div class="section">
+    <form method="GET" action="/dashboard" class="flex-row search-form">
+      <input type="text" name="search" placeholder="Search questions..." value="<%= typeof searchQuery !== 'undefined' && searchQuery ? searchQuery : '' %>" />
+      <button type="submit" class="btn">Search</button>
+      <% if (typeof searchQuery !== 'undefined' && searchQuery) { %>
+        <a href="/dashboard" class="btn-clear">Clear</a>
+      <% } %>
+    </form>
+    <h2>All Questions <% if (user.role !== 'admin') { %><a href="/questions/new">Post a Question</a><% } %></h2>
+    <% if (typeof error !== 'undefined' && error) { %><p class="error"><%= error %></p><% } %>
+    <% if (typeof success !== 'undefined' && success) { %>
+      <p class="success"><strong><%= success %></strong></p>
+    <% } %>
+    <% if (typeof allQuestions === 'undefined' || !allQuestions || allQuestions.length === 0) { %>
+      <p>No questions yet.</p>
+    <% } else { %>
+      <% if (user.role === 'admin') { %>
+        <% allQuestions.forEach(function(q) { %>
+          <div class="row">
+            <span><strong>Question #<%= q.id %></strong> | <%= q.description && q.description.length > 100 ? q.description.substring(0, 100) + '...' : (q.description || '') %> | Status: <strong><%= q.status %></strong></span>
+            <span>
+              <% if (q.status !== 'Deactivated') { %>
+                <% if (q.status === 'Pending Approval') { %>
+                  <a href="/questions/<%= q.id %>/edit">Edit</a>
+                  <button onclick="approveQuestion(<%= q.id %>)" class="btn-sm btn-ok">Approve</button>
+                  <button onclick="rejectQuestion(<%= q.id %>)" class="btn-sm btn-warn">Deactivate</button>
+                <% } %>
+                <% if (q.status === 'Approved') { %>
+                  <button onclick="completeQuestion(<%= q.id %>)" class="btn-sm btn-ok">Complete</button>
+                <% } %>
+              <% } %>
+              <form action="/questions/<%= q.id %>/delete" method="POST" class="inline-form" onsubmit="return confirm('Are you sure you want to permanently delete Question #<%= q.id %>? This action cannot be undone and will also delete all associated answers.');">
+                <button type="submit" class="btn-sm btn">Delete</button>
+              </form>
+            </span>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <% allQuestions.forEach(function(q) { %>
+          <div class="question-row">
+            <div class="mb">
+              <strong>Question #<%= q.id %></strong>
+              <p><%= q.description %></p>
+              <p class="meta">
+                Asked by: <strong><%= q.questionCreator && q.questionCreator.name ? q.questionCreator.name : (q.questionCreator && q.questionCreator.email ? q.questionCreator.email : 'Unknown') %></strong>
+              </p>
+            </div>
+            
+            <% if (q.answers && q.answers.length > 0) { %>
+              <div class="answer-block">
+                <strong>Previous Answers:</strong>
+                <% q.answers.forEach(function(a) { %>
+                  <div class="answer-card">
+                    <div class="flex-row">
+                      <div class="flex-1">
+                        <p style="margin: 0 0 5px 0;"><%= a.answer %></p>
+                        <p class="meta">
+                          Answered by: <strong><%= a.answerAuthor && a.answerAuthor.name ? a.answerAuthor.name : (a.answerAuthor && a.answerAuthor.email ? a.answerAuthor.email : 'Unknown') %></strong>
+                          <% if (a.status) { %> | Status: <%= a.status %><% } %>
+                          <% if (a.likeCount) { %> | Likes: <span id="likes-<%= a.id %>"><%= a.likeCount %></span><% } %>
+                        </p>
+                        <form method="POST" action="/api/comments" class="flex-row comment-form" onsubmit="return submitComment(event, <%= a.id %>);">
+                          <input type="hidden" name="answerId" value="<%= a.id %>" />
+                          <input type="text" name="comment" placeholder="Add a comment..." required />
+                          <button type="submit" class="btn-sm btn">Comment</button>
+                        </form>
+                      </div>
+                      <button onclick="likeAnswer(<%= a.id %>)" class="btn-sm btn-ok">Like</button>
+                    </div>
+                    <% if (a.comments && a.comments.length > 0) { %>
+                      <div class="comment-block">
+                        <strong class="meta">Comments:</strong>
+                        <% a.comments.forEach(function(c) { %>
+                          <div class="comment-card">
+                            <p style="margin: 0; font-size: 12px;"><%= c.comment %></p>
+                            <p class="meta-sm" style="margin: 0;">
+                              by <strong><%= c.commentAuthor && c.commentAuthor.name ? c.commentAuthor.name : (c.commentAuthor && c.commentAuthor.email ? c.commentAuthor.email : 'Unknown') %></strong>
+                            </p>
+                          </div>
+                        <% }); %>
+                      </div>
+                    <% } %>
+                  </div>
+                <% }); %>
+              </div>
+            <% } %>
+            
+            <form method="POST" action="/answers/new" class="flex-row answer-form">
+              <input type="hidden" name="questionId" value="<%= q.id %>" />
+              <input type="hidden" name="returnUrl" value="/dashboard" />
+              <textarea name="answer" rows="3" placeholder="Enter your answer here..." required></textarea>
+              <button type="submit" class="btn">Submit Answer</button>
+            </form>
+          </div>
+        <% }); %>
+      <% } %>
+    <% } %>
+  </div>
+
+  <% if (user.role === 'admin') { %>
+    <div class="section">
+      <h2>All Answers</h2>
+      <% if (typeof allAnswers === 'undefined' || !allAnswers || allAnswers.length === 0) { %>
+        <p>No answers yet.</p>
+      <% } else { %>
+        <% allAnswers.forEach(function(a) { %>
+          <div class="row">
+            <span>
+              <strong>Answer #<%= a.id %></strong> | 
+              <% if (a.question) { %>Question #<%= a.question.id %> | <% } %>
+              <%= a.answer && a.answer.length > 100 ? a.answer.substring(0, 100) + '...' : (a.answer || '') %> | 
+              Status: <strong><%= a.status %></strong> | 
+              Likes: <%= a.likeCount || 0 %>
+            </span>
+            <span>
+              <% if (a.status !== 'Deactivated') { %>
+                <% if (a.status === 'Pending Approval') { %>
+                  <a href="/answers/<%= a.id %>/edit">Edit</a>
+                  <button onclick="approveAnswer(<%= a.id %>)" class="btn-sm btn-ok">Approve</button>
+                  <button onclick="rejectAnswer(<%= a.id %>)" class="btn-sm btn-warn">Deactivate</button>
+                <% } %>
+              <% } %>
+              <form action="/answers/<%= a.id %>/delete" method="POST" class="inline-form" onsubmit="return confirm('Are you sure you want to permanently delete Answer #<%= a.id %>? This action cannot be undone.');">
+                <button type="submit" class="btn-sm btn">Delete</button>
+              </form>
+            </span>
+          </div>
+        <% }); %>
+      <% } %>
+    </div>
+  <% } %>
+
+  <% if (user.role === 'admin') { %>
+    <script>
+      async function completeQuestion(questionId) {
+        if (!confirm('Mark Question #' + questionId + ' as Completed?')) return;
+        try {
+          const response = await fetch(`/api/questions/${questionId}/complete`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+          });
+          if (response.ok) {
+            location.reload();
+          } else {
+            const data = await response.json();
+            alert('Error: ' + (data.message || 'Failed to mark question as completed'));
+          }
+        } catch (error) {
+          alert('Error: ' + error.message);
+        }
+      }
+
+      async function approveQuestion(questionId) {
+        if (!confirm('Approve this question?')) return;
+        try {
+          const response = await fetch(`/api/questions/${questionId}/approve`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+          });
+          if (response.ok) {
+            location.reload();
+          } else {
+            const data = await response.json();
+            alert('Error: ' + (data.message || 'Failed to approve question'));
+          }
+        } catch (error) {
+          alert('Error: ' + error.message);
+        }
+      }
+
+      async function rejectQuestion(questionId) {
+        if (!confirm('Reject this question? It will be deactivated.')) return;
+        try {
+          const response = await fetch(`/api/questions/${questionId}/deactivate`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+          });
+          if (response.ok) {
+            location.reload();
+          } else {
+            const data = await response.json();
+            alert('Error: ' + (data.message || 'Failed to reject question'));
+          }
+        } catch (error) {
+          alert('Error: ' + error.message);
+        }
+      }
+
+      async function approveAnswer(answerId) {
+        if (!confirm('Approve this answer?')) return;
+        try {
+          const response = await fetch(`/api/answers/${answerId}/approve`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+          });
+          if (response.ok) {
+            location.reload();
+          } else {
+            const data = await response.json();
+            alert('Error: ' + (data.message || 'Failed to approve answer'));
+          }
+        } catch (error) {
+          alert('Error: ' + error.message);
+        }
+      }
+
+      async function rejectAnswer(answerId) {
+        if (!confirm('Reject this answer? It will be deactivated.')) return;
+        try {
+          const response = await fetch(`/api/answers/${answerId}/deactivate`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+          });
+          if (response.ok) {
+            location.reload();
+          } else {
+            const data = await response.json();
+            alert('Error: ' + (data.message || 'Failed to reject answer'));
+          }
+        } catch (error) {
+          alert('Error: ' + error.message);
+        }
+      }
+    </script>
+  <% } %>
+
+  <% if (user.role !== 'admin') { %>
+    <script>
+      async function likeAnswer(answerId) {
+        try {
+          const response = await fetch(`/api/answers/${answerId}/like`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+          });
+          if (response.ok) {
+            const data = await response.json();
+            const likesElement = document.getElementById(`likes-${answerId}`);
+            if (likesElement) {
+              likesElement.textContent = data.likeCount || 0;
+            }
+          } else {
+            const data = await response.json();
+            alert('Error: ' + (data.message || 'Failed to like answer'));
+          }
+        } catch (error) {
+          alert('Error: ' + error.message);
+        }
+      }
+
+      async function submitComment(event, answerId) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+        const comment = formData.get('comment');
+        
+        try {
+          const response = await fetch('/api/comments', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({
+              comment: comment,
+              answerId: answerId
+            })
+          });
+          
+          if (response.ok) {
+            form.reset();
+            location.reload();
+          } else {
+            const data = await response.json();
+            alert('Error: ' + (data.message || 'Failed to add comment'));
+          }
+        } catch (error) {
+          alert('Error: ' + error.message);
+        }
+        return false;
+      }
+    </script>
+  <% } %>
+</body>
+</html>
